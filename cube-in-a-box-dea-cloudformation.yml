@@ -36,8 +36,8 @@ Parameters:
   Region:
     Description: The AWS region to deploy in
     Type: String
-    Default: us-west-2
-    AllowedValues: [us-west-2, ap-southeast-2]
+    Default: ap-southeast-2
+    AllowedValues: [ap-southeast-2]
 Mappings:
   RegionMap:
     us-west-2:
