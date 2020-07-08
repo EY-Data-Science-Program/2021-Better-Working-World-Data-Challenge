@@ -1,0 +1,15 @@
+[
+    {
+      "ParameterKey": "KeyName",
+      "ParameterValue": "aleith"
+    },
+    {
+      "ParameterKey": "InstanceType",
+      "ParameterValue": "t2.large"
+    },
+    {
+      "ParameterKey": "SecretPassword",
+      "ParameterValue": "lemmein"
+    }
+  ]
+  

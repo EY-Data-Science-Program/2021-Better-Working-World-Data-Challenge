@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  postgres:
+    image: kartoza/postgis:11.0-2.5
+    environment:
+      - POSTGRES_DB=opendatacube
+      - POSTGRES_PASSWORD=opendatacubepassword
+      - POSTGRES_USER=opendatacube
+    ports:
+      - 5432:5432
+    restart: always
+  
+  jupyter:
+    image: geoscienceaustralia/sandbox
+    environment:
+      - DB_HOSTNAME=postgres
+      - DB_USERNAME=opendatacube
+      - DB_PASSWORD=opendatacubepassword
+      - DB_DATABASE=opendatacube
+      - AWS_NO_SIGN_REQUEST=true
+      - AWS_DEFAULT_REGION=ap-southeast-2
+    ports:
+      - "80:8888"
+    volumes:
+      - ./scripts:/scripts
+      - ./notebooks:/notebooks
+    restart: always
+    command: jupyter notebook --allow-root --ip="0.0.0.0" --NotebookApp.token='secretpassword'

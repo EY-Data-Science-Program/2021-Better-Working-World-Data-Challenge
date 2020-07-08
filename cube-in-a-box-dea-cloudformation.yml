@@ -1,0 +1,157 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Metadata:
+  License: Apache-2.0
+Description: 'Open Data Cube template with EC2 instance and RDS.'
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  InstanceType:
+    Description: WebServer EC2 instance type
+    Type: String
+    Default: t2.small
+    AllowedValues: [
+      t2.small, t2.medium, t2.large,
+      m1.large, m1.xlarge, m2.xlarge,
+      c4.large, c4.xlarge, c4.2xlarge,
+      g2.8xlarge, r3.large, r3.xlarge]
+    ConstraintDescription: must be a valid EC2 instance type.
+  SecretPassword:
+    Description: Password to open up the Jupyter notebook
+    Type: String
+    Default: 'secretpassword'
+  EC2InstanceName:
+    Description: The name of the Cube in a Box EC2 instance
+    Type: String
+    Default: 'CubeInABox'
+  SSHLocation:
+    Description: The IP address range that can be used to access the Cube in a Box
+    Type: String
+    MinLength: '9'
+    MaxLength: '18'
+    Default: 0.0.0.0/0
+    AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  Region:
+    Description: The AWS region to deploy in
+    Type: String
+    Default: us-west-2
+    AllowedValues: [us-west-2, ap-southeast-2]
+Mappings:
+  RegionMap:
+    us-west-2:
+      "HVM64": "ami-04ef7170e45541f07"
+    ap-southeast-2:
+      "HVM64": "ami-033c54f661460cfd2"
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref 'InstanceType'
+      SecurityGroups: [!Ref 'InstanceSecurityGroup']
+      KeyName: !Ref 'KeyName'
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", HVM64]
+      IamInstanceProfile: !Ref ODCInstanceProfile
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 40
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -ex
+          # Install our dependencies
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get update && apt-get -y install python-pip
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+          add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+          apt-get update
+          apt-get install -y docker-ce python3-pip unzip wget
+          pip3 install docker-compose
+          # Get our code
+          wget https://github.com/crc-si/cube-in-a-box/archive/master.zip -O /tmp/archive.zip
+          unzip /tmp/archive.zip
+          mv cube-in-a-box-master /opt/odc
+          # We need to change some local vars.
+          sed --in-place 's/secretpassword/${SecretPassword}/g' /opt/odc/docker-compose.yml
+          # We need write access in these places
+          chmod -R 777 /opt/odc/notebooks
+          chmod -R 777 /opt/odc/data
+          cd /opt/odc
+          # Start the machines
+          sudo docker-compose pull
+          sudo docker-compose up -d
+          # Wait for them to wake up
+          sleep 15
+          # Initialise and load a product, and then some data
+          # Note to future self, we can't use make here because of TTY interactivity (the -T flag)
+          make initdb metadata product
+          make index
+          echo "Done, all done. It should work now!"
+      Tags:
+        - Key:   "Name"
+          Value: !Ref 'EC2InstanceName'
+
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable access
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp: !Ref 'SSHLocation'
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: !Ref 'SSHLocation'
+      - IpProtocol: tcp
+        FromPort: '8888'
+        ToPort: '8888'
+        CidrIp: !Ref 'SSHLocation'
+
+  ODCRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+  RolePolicies:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: odc-policy
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action: ["S3:ListBucket"]
+          Resource: ["arn:aws:s3:::dea-public-data"]
+        - Effect: Allow
+          Action: ["S3:GetObject"]
+          Resource: ["arn:aws:s3:::dea-public-data/*"]
+      Roles:
+      - !Ref ODCRole
+  ODCInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+      - !Ref ODCRole
+
+Outputs:
+  InstanceId:
+    Description: InstanceId of the newly created EC2 instance
+    Value: !Ref 'EC2Instance'
+  PublicDNS:
+    Description: Public DNSName of the newly created EC2 instance
+    Value: !GetAtt [EC2Instance, PublicDnsName]
+  PublicIP:
+    Description: Public IP address of the newly created EC2 instance
+    Value: !GetAtt [EC2Instance, PublicIp]
