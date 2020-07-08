@@ -12,13 +12,13 @@ If you have `make`:
 * Index a default region with `make index`
 * View the Jupyter notebook at [http://localhost](http://localhost) using the password `secretpassword`
 
-If you don't have make, you can inspect the Makefile for the commands that are needed to be executed.
+If you don't have make, you can inspect the [Makefile](Makefile) for the commands that are needed to be executed.
 
 ## Deploying to AWS
 
 To deploy to AWS, you can either do it on the command line, with the AWS command line installed or the magic URL below and the AWS console. Detailed instructions are [available](docs/Detailed_Install.md).
 
-Once deployed, if you navigate to the IP of the deployed instance, you can access Jupyter with the password you set in the parameters.json file or in the AWS UI if you used the magic URL.
+Once deployed, if you navigate to the IP of the deployed instance, you can access Jupyter with the password you set in the parameter in the AWS UI. Or you can SSH into the instance using the IP address and the SSH key you set.
 
 ## Magic link
 

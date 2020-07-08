@@ -62,7 +62,6 @@ Resources:
           #!/bin/bash -ex
           # Install our dependencies
           export DEBIAN_FRONTEND=noninteractive
-          export COMPOSE_INTERACTIVE_NO_CLI=1
           curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
           add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
           apt-get update && apt-get install -y docker-ce python3-pip unzip wget
@@ -83,10 +82,10 @@ Resources:
           sleep 5
           # Initialise and load a product, and then some data
           # Note to future self, we can't use make here because of TTY interactivity (the -T flag)
-          docker-compose exec jupyter datacube -v system init
-          docker-compose exec jupyter datacube metadata add https://raw.githubusercontent.com/opendatacube/datacube-alchemist/local-dev-env/metadata.eo_plus.yaml
-          docker-compose exec jupyter datacube product add https://raw.githubusercontent.com/GeoscienceAustralia/dea-config/master/products/ga_s2_ard_nbar/ga_s2_ard_nbar_granule.yaml
-          docker-compose exec jupyter bash -c "gunzip -c < /scripts/vic-scenes.tar.gz | dc-index-from-tar"
+          docker-compose exec -T jupyter datacube -v system init
+          docker-compose exec -T jupyter datacube metadata add https://raw.githubusercontent.com/opendatacube/datacube-alchemist/local-dev-env/metadata.eo_plus.yaml
+          docker-compose exec -T jupyter datacube product add https://raw.githubusercontent.com/GeoscienceAustralia/dea-config/master/products/ga_s2_ard_nbar/ga_s2_ard_nbar_granule.yaml
+          docker-compose exec -T jupyter bash -c "gunzip -c < /scripts/vic-scenes.tar.gz | dc-index-from-tar"
           echo "Done, all done. It should work now!"
       Tags:
         - Key:   "Name"
