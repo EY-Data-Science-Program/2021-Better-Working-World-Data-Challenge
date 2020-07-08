@@ -30,8 +30,7 @@ product:
 # Todo: write something that indexes off this: https://explorer.sandbox.dea.ga.gov.au/stac/search?product=ga_s2a_ard_nbar_granule&limit=100&bbox=[140,-40,150,-34]
 index:
 	docker-compose exec jupyter \
-		bash -c \
-			"gunzip -c < /scripts/vic-scenes.tar.gz | dc-index-from-tar"
+		bash -c "gunzip -c < /scripts/vic-scenes.tar.gz | dc-index-from-tar"
 
 # Careful, this takes a very long time.
 find-dataset-documents:
