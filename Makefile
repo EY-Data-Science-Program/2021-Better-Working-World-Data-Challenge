@@ -63,15 +63,7 @@ upload-s3:
 create-infra:
 	aws cloudformation create-stack \
 		--region ap-southeast-2 \
-		--stack-name odc-test \
-		--template-body file://cube-in-a-box-dea-cloudformation.yml \
-		--parameter file://parameters.json \
-		--tags Key=Name,Value=OpenDataCube \
-		--capabilities CAPABILITY_NAMED_IAM
-
-update-infra:
-	aws cloudformation update-stack \
-		--stack-name odc-test \
+		--stack-name odc-test-alex \
 		--template-body file://cube-in-a-box-dea-cloudformation.yml \
 		--parameter file://parameters.json \
 		--tags Key=Name,Value=OpenDataCube \

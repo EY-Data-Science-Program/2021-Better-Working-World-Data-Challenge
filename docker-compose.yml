@@ -25,5 +25,7 @@ services:
     volumes:
       - ./scripts:/scripts
       - ./notebooks:/home/jovyan
+    depends_on:
+      - postgres
     restart: always
     command: jupyter notebook --allow-root --ip="0.0.0.0" --NotebookApp.token='secretpassword'
