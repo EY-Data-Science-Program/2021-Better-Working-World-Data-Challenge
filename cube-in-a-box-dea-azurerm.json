@@ -68,20 +68,6 @@
         "description": "Name of the Network Security Group"
       }
     },
-    "_artifactsLocation": {
-      "type": "string",
-      "metadata": {
-        "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
-      },
-      "defaultValue": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vm-linux-Jupyterhub/"
-    },
-    "_artifactsLocationSasToken": {
-      "type": "securestring",
-      "metadata": {
-        "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated."
-      },
-      "defaultValue": ""
-    },
     "diskSizeGB": {
       "type": "string",
       "metadata": {
@@ -115,17 +101,9 @@
       "GPU-56GB": "Standard_NC6_Promo"
     },
     "vmName": "[concat(parameters('vmName'),'-', parameters('InstanceType'))]",
-    "linuxConfiguration": {
-      "disablePasswordAuthentication": true,
-      "ssh": {
-        "publicKeys": [
-          {
-            "path": "/home/ubuntu/.ssh/authorized_keys",
-            "keyData": "[parameters('sshKey')]"
-          }
-        ]
-      }
-    }
+    "installScript":
+      "echo 'command 1' >> /tmp/deploy.log
+       echo 'command 2' >> /tmp/deploy.log"
   },
   "resources": [
     {
@@ -347,10 +325,7 @@
             "typeHandlerVersion": "2.0",
             "autoUpgradeMinorVersion": true,
             "protectedSettings": {
-              "commandToExecute": "bash install.sh ubuntu",
-              "fileUris": [
-                "[uri(parameters('_artifactsLocation'), concat('scripts/install.sh', parameters('_artifactsLocationSasToken')))]"
-              ]
+              "script": "[base64(variables('installScript'))]"
             }
           }
         }
