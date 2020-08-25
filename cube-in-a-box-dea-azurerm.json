@@ -34,7 +34,6 @@
     },
     "SSHLocation": {
       "type": "string",
-      "defaultValue": "0.0.0.0/0",
       "MinLength": 9,
       "MaxLength": 18,
       "metadata": {
@@ -143,7 +142,7 @@
               "protocol": "Tcp",
               "access": "Allow",
               "direction": "Inbound",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('SSHLocation')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*",
               "destinationPortRange": "80"
@@ -156,7 +155,7 @@
               "protocol": "Tcp",
               "access": "Allow",
               "direction": "Inbound",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('SSHLocation')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*",
               "destinationPortRange": "443"
@@ -169,7 +168,7 @@
               "protocol": "Tcp",
               "access": "Allow",
               "direction": "Inbound",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('SSHLocation')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*",
               "destinationPortRange": "22"
@@ -182,7 +181,7 @@
               "protocol": "Tcp",
               "access": "Allow",
               "direction": "Inbound",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('SSHLocation')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*",
               "destinationPortRange": "8000"
