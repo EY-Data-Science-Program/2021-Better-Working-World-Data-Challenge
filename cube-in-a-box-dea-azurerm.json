@@ -19,7 +19,7 @@
         "description": "WebServer instance size"
       }
     },
-    "JupyterPassword": {
+    "SecretPassword": {
       "type": "securestring",
       "metadata": {
         "description": "Password to open up the Jupyter notebook."
