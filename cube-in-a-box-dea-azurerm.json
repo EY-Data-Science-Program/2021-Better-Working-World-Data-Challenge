@@ -101,9 +101,12 @@
       "GPU-56GB": "Standard_NC6_Promo"
     },
     "vmName": "[concat(parameters('vmName'),'-', parameters('InstanceType'))]",
-    "installScript":
-      "echo 'command 1' >> /tmp/deploy.log
-       echo 'command 2' >> /tmp/deploy.log"
+    "installScript": "cat > /tmp/cubeinabox.sh <<EOS
+set -x
+echo 'it worked again!'
+EOS
+
+bash /tmp/cubeinabox.sh >> /tmp/deploy.log"
   },
   "resources": [
     {
