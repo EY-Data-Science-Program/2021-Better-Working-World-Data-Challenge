@@ -82,6 +82,13 @@
         "16384",
         "32767"
       ]
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "defaultValue": "https://raw.githubusercontent.com/codeindulgence/cube-in-a-box-dea/main/",
+      "metadata": {
+        "description": "Base URI for installation assets."
+      }
     }
   },
   "variables": {
@@ -100,13 +107,7 @@
       "CPU-16GB": "Standard_D4s_v3",
       "GPU-56GB": "Standard_NC6_Promo"
     },
-    "vmName": "[concat(parameters('vmName'),'-', parameters('InstanceType'))]",
-    "installScript": "cat > /tmp/cubeinabox.sh <<EOS
-set -x
-echo 'it worked again!'
-EOS
-
-bash /tmp/cubeinabox.sh >> /tmp/deploy.log"
+    "vmName": "[concat(parameters('vmName'),'-', parameters('InstanceType'))]"
   },
   "resources": [
     {
@@ -328,7 +329,10 @@ bash /tmp/cubeinabox.sh >> /tmp/deploy.log"
             "typeHandlerVersion": "2.0",
             "autoUpgradeMinorVersion": true,
             "protectedSettings": {
-              "script": "[base64(variables('installScript'))]"
+              "fileUris": [
+                "[uri(parameters('_artifactsLocation'), concat('install-cube.sh'))]"
+              ],
+              "commandToExecute": "[concat('bash install-cube.sh ', parameters('SecretPassword'), ' 2>&1 | tee -a /tmp/install-cube.log')]"
             }
           }
         }
