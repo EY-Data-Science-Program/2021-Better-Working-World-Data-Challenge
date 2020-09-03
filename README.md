@@ -31,7 +31,7 @@ You need to be logged in to the AWS Console deploy using this URL. Once logged i
 
 ### Azure
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A//raw.githubusercontent.com/codeindulgence/cube-in-a-box-dea/main/cube-in-a-box-dea-azurerm.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%sFcodeindulgence%sFcube-in-a-box-dea%sFmain%sFcube-in-a-box-dea-azurerm.json)
 
 ## Command line
 
