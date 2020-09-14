@@ -2,10 +2,19 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "SshKey": {
-      "type": "securestring",
+    "InstanceName": {
+      "type": "string",
+      "defaultValue": "CubeInABox",
       "metadata": {
-        "description": "SSH Key for the Virtual Machine."
+        "description": "The name of the Cube in a Box instance."
+      }
+    },
+    "SSHLocation": {
+      "type": "string",
+      "MinLength": 9,
+      "MaxLength": 18,
+      "metadata": {
+        "description": "The IP address range that can be used to access the Cube in a Box."
       }
     },
     "InstanceType": {
@@ -16,28 +25,19 @@
         "GPU-56GB"
       ],
       "metadata": {
-        "description": "WebServer instance size"
+        "description": "Instance size"
+      }
+    },
+    "SshKey": {
+      "type": "string",
+      "metadata": {
+        "description": "SSH Public Key for the Virtual Machine."
       }
     },
     "SecretPassword": {
       "type": "securestring",
       "metadata": {
-        "description": "Password to open up the Jupyter notebook."
-      }
-    },
-    "vmName": {
-      "type": "string",
-      "defaultValue": "CubeInABox",
-      "metadata": {
-        "description": "The name of the Cube in a Box EC2 instance."
-      }
-    },
-    "SSHLocation": {
-      "type": "string",
-      "MinLength": 9,
-      "MaxLength": 18,
-      "metadata": {
-        "description": "The IP address range that can be used to access the Cube in a Box."
+        "description": "Password to access Jupyter notebook."
       }
     },
     "virtualNetworkName": {
@@ -60,34 +60,12 @@
       "metadata": {
         "description": "Name of the Network Security Group"
       }
-    },
-    "diskSizeGB": {
-      "type": "string",
-      "metadata": {
-        "description": "The size for an atached disk."
-      },
-      "defaultValue": "1024",
-      "allowedValues": [
-        "1024",
-        "2048",
-        "4096",
-        "8192",
-        "16384",
-        "32767"
-      ]
-    },
-    "_artifactsLocation": {
-      "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/codeindulgence/cube-in-a-box-dea/main/",
-      "metadata": {
-        "description": "Base URI for installation assets."
-      }
     }
   },
   "variables": {
     "Region": "[resourceGroup().location]",
-    "networkInterfaceName": "[concat(parameters('vmName'),'NetInt')]",
-    "publicIpAddressName": "[concat(parameters('vmName'), 'PublicIP' )]",
+    "networkInterfaceName": "[concat(parameters('InstanceName'),'NetInt')]",
+    "publicIpAddressName": "[concat(parameters('InstanceName'), 'PublicIP' )]",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
     "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
     "storageAccountName": "[concat('storage', uniqueString(resourceGroup().id))]",
@@ -101,7 +79,9 @@
       "CPU-16GB": "Standard_D4s_v3",
       "GPU-56GB": "Standard_NC6_Promo"
     },
-    "vmName": "[concat(parameters('vmName'),'-', parameters('InstanceType'))]"
+    "diskSizeGB": "512",
+    "vmName": "[concat(parameters('InstanceName'),'-', parameters('InstanceType'))]",
+    "artifactsLocation": "https://raw.githubusercontent.com/codeindulgence/cube-in-a-box-dea/main/"
   },
   "resources": [
     {
@@ -263,9 +243,9 @@
           "dataDisks": [
             {
               "lun": 0,
-              "name": "[concat('Datadisk', parameters('vmName'))]",
+              "name": "[concat('Datadisk', parameters('InstanceName'))]",
               "createOption": "Empty",
-              "diskSizeGB": "[parameters('diskSizeGB')]"
+              "diskSizeGB": "[variables('diskSizeGB')]"
             }
           ],
           "imageReference": {
@@ -283,7 +263,7 @@
           ]
         },
         "osProfile": {
-          "computerName": "[parameters('vmName')]",
+          "computerName": "[parameters('InstanceName')]",
           "adminUsername": "ubuntu",
           "adminPassword": "",
           "linuxConfiguration": {
@@ -324,7 +304,7 @@
             "autoUpgradeMinorVersion": true,
             "protectedSettings": {
               "fileUris": [
-                "[uri(parameters('_artifactsLocation'), concat('install-cube.sh'))]"
+                "[uri(variables('artifactsLocation'), concat('install-cube.sh'))]"
               ],
               "commandToExecute": "[concat('bash install-cube.sh ', parameters('SecretPassword'), ' 2>&1 | tee -a /tmp/install-cube.log')]"
             }
