@@ -28,7 +28,7 @@ apt-get update && apt-get install -y docker-ce python3-pip unzip wget
 pip3 install docker-compose
 
 # Get our code
-wget https://github.com/opendatacube/cube-in-a-box-dea/archive/main.zip -O /tmp/archive.zip
+wget https://github.com/EY-Data-Science-Program/2020-bushfire-challenge/archive/main.zip -O /tmp/archive.zip
 unzip /tmp/archive.zip
 mv cube-in-a-box-dea-main /opt/odc
 
