@@ -30,7 +30,7 @@ pip3 install docker-compose
 # Get our code
 wget https://github.com/EY-Data-Science-Program/2020-bushfire-challenge/archive/main.zip -O /tmp/archive.zip
 unzip /tmp/archive.zip
-mv cube-in-a-box-dea-main /opt/odc
+mv 2020-bushfire-challenge-main /opt/odc
 
 # We need to change some local vars.
 sed --in-place "s/secretpassword/${PASSWORD}/g" /opt/odc/docker-compose.yml
