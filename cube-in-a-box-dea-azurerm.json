@@ -58,7 +58,7 @@
       "CPU-16GB": "Standard_D4s_v3",
       "GPU-56GB": "Standard_NC6_Promo"
     },
-    "diskSizeGB": "512",
+    "diskSizeGB": "50",
     "vmName": "[concat(parameters('InstanceName'),'-', parameters('InstanceType'))]",
     "artifactsLocation": "https://raw.githubusercontent.com/codeindulgence/cube-in-a-box-dea/main/",
     "virtualNetworkName": "dea-vnet",
