@@ -48,7 +48,11 @@ index:
 			cat /scripts/ls8-vic-scenes.txt \
 			| s3-to-tar --no-sign-request \
 			| dc-index-from-tar --ignore-lineage ;\
+			s3-find s3://dea-public-data/projects/ey-2020-bushfire-challenge/**/*.odc-dataset.json --no-sign-request \
+			| s3-to-tar --no-sign-request \
+			| dc-index-from-tar ;\
 		"
+
 
 index-linescan:
 	docker-compose exec jupyter \

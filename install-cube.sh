@@ -56,11 +56,11 @@ docker-compose exec -T jupyter datacube metadata add https://raw.githubuserconte
 docker-compose exec -T jupyter datacube product add https://raw.githubusercontent.com/GeoscienceAustralia/dea-config/master/products/ga_s2_ard_nbar/ga_s2_ard_nbar_granule.yaml
 docker-compose exec -T jupyter datacube product add https://raw.githubusercontent.com/GeoscienceAustralia/digitalearthau/develop/digitalearthau/config/eo3/products-aws/ard_ls8.odc-product.yaml
 docker-compose exec -T jupyter datacube product add https://raw.githubusercontent.com/GeoscienceAustralia/digitalearthau/develop/digitalearthau/config/eo3/products-aws/ard_ls7.odc-product.yaml
-# docker-compose exec -T jupyter datacube product add /scripts/linescan.odc-product.yaml
+docker-compose exec -T jupyter datacube product add /scripts/linescan.odc-product.yaml
 # Now index some datasets
 docker-compose exec -T jupyter bash -c "cat /scripts/s-2-vic-scenes.txt | s3-to-tar --no-sign-request | dc-index-from-tar --ignore-lineage"
 docker-compose exec -T jupyter bash -c "cat /scripts/ls7-vic-scenes.txt | s3-to-tar --no-sign-request | dc-index-from-tar --ignore-lineage"
 docker-compose exec -T jupyter bash -c "cat /scripts/ls8-vic-scenes.txt | s3-to-tar --no-sign-request | dc-index-from-tar --ignore-lineage"
-# docker-compose exec -T jupyter bash -c "s3-find s3://dea-public-data/projects/ey-challenge-2020/**/*.json | s3-to-tar --no-sign-request | dc-index-from-tar --stac"
+docker-compose exec -T jupyter bash -c "s3-find --no-sign-request s3://dea-public-data/projects/ey-2020-bushfire-challenge/**/*.odc-dataset.json | s3-to-tar --no-sign-request | dc-index-from-tar"
 
 echo "Finished $(date)"
