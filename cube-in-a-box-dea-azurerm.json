@@ -198,9 +198,9 @@
       "name": "[variables('storageAccountName')]",
       "location": "[variables('Region')]",
       "sku": {
-        "name": "[variables('storageAccountType')]"
-      },
-      "kind": "[variables('storageAccountKind')]"
+        "name": "Standard_LRS"
+    },
+       "kind": "[variables('storageAccountKind')]"
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
@@ -227,7 +227,10 @@
               "lun": 0,
               "name": "[concat('Datadisk', parameters('InstanceName'))]",
               "createOption": "Empty",
-              "diskSizeGB": "[variables('diskSizeGB')]"
+              "diskSizeGB": "[variables('diskSizeGB')]",
+              "managedDisk": {
+                "storageAccountType": "Standard_LRS"
+              }
             }
           ],
           "imageReference": {
