@@ -19,7 +19,7 @@ initdb:
 metadata:
 	docker-compose exec jupyter \
 		bash -c "\
-			datacube metadata add https://raw.githubusercontent.com/opendatacube/datacube-alchemist/local-dev-env/metadata.eo_plus.yaml;\
+			datacube metadata add /scripts/metadata.eo_plus.yaml ;\
 			datacube metadata add https://raw.githubusercontent.com/GeoscienceAustralia/digitalearthau/develop/digitalearthau/config/eo3/eo3_landsat_ard.odc-type.yaml;\
 		"
 
