@@ -291,7 +291,7 @@
               "fileUris": [
                 "https://raw.githubusercontent.com/EY-Data-Science-Program/2020-bushfire-challenge/main/install-cube.sh"
               ],
-              "script": "[concat('bash install-cube.sh ', parameters('SecretPassword'), ' 2>&1 | tee -a /tmp/install-cube.log')]"
+              "commandToExecute": "[concat('bash install-cube.sh ', parameters('SecretPassword'), ' 2>&1 | tee -a /tmp/install-cube.log')]"
             }
           }
         }
