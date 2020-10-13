@@ -2,4 +2,3 @@
 scripts
 *.pyc
 .env
-notebooks/.*
