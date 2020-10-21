@@ -32,7 +32,7 @@ done
 # Reset remaining, unmatched arguments
 set -- $_commands
 
-if [ "$_HELP" ]; then cat >&2 <<EOS
+if [ "$_HELP" ] || [ -z "$_FILE" ]; then cat >&2 <<EOS
 Usage: $0 [options]
 This script will take a list of S3 objects from a file and copy them to the
 target Blob container. Any files in the same folder as the S3 object will also be copied.
