@@ -1,0 +1,286 @@
+---
+# Metadata Type
+# url: https://explorer.sandbox.dea.ga.gov.au/metadata-type/eo3_landsat_ard.odc-type.yaml
+name: eo3_landsat_ard
+description: EO3 for ARD Landsat Collection 3
+dataset:
+  id:
+  - id
+  label:
+  - label
+  format:
+  - properties
+  - odc:file_format
+  sources:
+  - lineage
+  - source_datasets
+  creation_dt:
+  - properties
+  - odc:processing_datetime
+  grid_spatial:
+  - grid_spatial
+  - projection
+  measurements:
+  - measurements
+  search_fields:
+    gqa:
+      type: double
+      offset:
+      - properties
+      - gqa:cep90
+      description: GQA Circular error probable (90%)
+    lat:
+      type: double-range
+      max_offset:
+      - - extent
+        - lat
+        - end
+      min_offset:
+      - - extent
+        - lat
+        - begin
+      description: Latitude range
+    lon:
+      type: double-range
+      max_offset:
+      - - extent
+        - lon
+        - end
+      min_offset:
+      - - extent
+        - lon
+        - begin
+      description: Longitude range
+    time:
+      type: datetime-range
+      max_offset:
+      - - properties
+        - dtr:end_datetime
+      - - properties
+        - datetime
+      min_offset:
+      - - properties
+        - dtr:start_datetime
+      - - properties
+        - datetime
+      description: Acquisition time range
+    eo_gsd:
+      type: double
+      offset:
+      - properties
+      - eo:gsd
+      indexed: false
+      description: Ground sample distance, meters
+    platform:
+      offset:
+      - properties
+      - eo:platform
+      indexed: false
+      description: Platform code
+    gqa_abs_x:
+      type: double
+      offset:
+      - properties
+      - gqa:abs_x
+      indexed: false
+      description: 'TODO: <gqa:abs_x>'
+    gqa_abs_y:
+      type: double
+      offset:
+      - properties
+      - gqa:abs_y
+      indexed: false
+      description: 'TODO: <gqa:abs_y>'
+    gqa_cep90:
+      type: double
+      offset:
+      - properties
+      - gqa:cep90
+      indexed: false
+      description: 'TODO: <gqa:cep90>'
+    fmask_snow:
+      type: double
+      offset:
+      - properties
+      - fmask:snow
+      indexed: false
+      description: 'TODO: <fmask:snow>'
+    gqa_abs_xy:
+      type: double
+      offset:
+      - properties
+      - gqa:abs_xy
+      indexed: false
+      description: 'TODO: <gqa:abs_xy>'
+    gqa_mean_x:
+      type: double
+      offset:
+      - properties
+      - gqa:mean_x
+      indexed: false
+      description: 'TODO: <gqa:mean_x>'
+    gqa_mean_y:
+      type: double
+      offset:
+      - properties
+      - gqa:mean_y
+      indexed: false
+      description: 'TODO: <gqa:mean_y>'
+    instrument:
+      offset:
+      - properties
+      - eo:instrument
+      indexed: false
+      description: Instrument name
+    cloud_cover:
+      type: double
+      offset:
+      - properties
+      - eo:cloud_cover
+      description: Cloud cover percentage [0, 100]
+    fmask_clear:
+      type: double
+      offset:
+      - properties
+      - fmask:clear
+      indexed: false
+      description: 'TODO: <fmask:clear>'
+    fmask_water:
+      type: double
+      offset:
+      - properties
+      - fmask:water
+      indexed: false
+      description: 'TODO: <fmask:water>'
+    gqa_mean_xy:
+      type: double
+      offset:
+      - properties
+      - gqa:mean_xy
+      indexed: false
+      description: 'TODO: <gqa:mean_xy>'
+    region_code:
+      offset:
+      - properties
+      - odc:region_code
+      description: "Spatial reference code from the provider. For Landsat region_code\
+        \ is a scene path row:\n        '{:03d}{:03d}.format(path,row)'\nFor Sentinel\
+        \ it is MGRS code. In general it is a unique string identifier that datasets\
+        \ covering roughly the same spatial region share.\n"
+    gqa_stddev_x:
+      type: double
+      offset:
+      - properties
+      - gqa:stddev_x
+      indexed: false
+      description: 'TODO: <gqa:stddev_x>'
+    gqa_stddev_y:
+      type: double
+      offset:
+      - properties
+      - gqa:stddev_y
+      indexed: false
+      description: 'TODO: <gqa:stddev_y>'
+    gqa_stddev_xy:
+      type: double
+      offset:
+      - properties
+      - gqa:stddev_xy
+      indexed: false
+      description: 'TODO: <gqa:stddev_xy>'
+    eo_sun_azimuth:
+      type: double
+      offset:
+      - properties
+      - eo:sun_azimuth
+      indexed: false
+      description: 'TODO: <eo:sun_azimuth>'
+    product_family:
+      offset:
+      - properties
+      - odc:product_family
+      indexed: false
+      description: Product family code
+    dataset_maturity:
+      offset:
+      - properties
+      - dea:dataset_maturity
+      description: One of - final|interim|nrt  (near real time)
+    eo_sun_elevation:
+      type: double
+      offset:
+      - properties
+      - eo:sun_elevation
+      indexed: false
+      description: 'TODO: <eo:sun_elevation>'
+    fmask_cloud_shadow:
+      type: double
+      offset:
+      - properties
+      - fmask:cloud_shadow
+      indexed: false
+      description: 'TODO: <fmask:cloud_shadow>'
+    gqa_iterative_mean_x:
+      type: double
+      offset:
+      - properties
+      - gqa:iterative_mean_x
+      indexed: false
+      description: 'TODO: <gqa:iterative_mean_x>'
+    gqa_iterative_mean_y:
+      type: double
+      offset:
+      - properties
+      - gqa:iterative_mean_y
+      indexed: false
+      description: 'TODO: <gqa:iterative_mean_y>'
+    gqa_iterative_mean_xy:
+      type: double
+      offset:
+      - properties
+      - gqa:iterative_mean_xy
+      indexed: false
+      description: 'TODO: <gqa:iterative_mean_xy>'
+    gqa_iterative_stddev_x:
+      type: double
+      offset:
+      - properties
+      - gqa:iterative_stddev_x
+      indexed: false
+      description: 'TODO: <gqa:iterative_stddev_x>'
+    gqa_iterative_stddev_y:
+      type: double
+      offset:
+      - properties
+      - gqa:iterative_stddev_y
+      indexed: false
+      description: 'TODO: <gqa:iterative_stddev_y>'
+    gqa_iterative_stddev_xy:
+      type: double
+      offset:
+      - properties
+      - gqa:iterative_stddev_xy
+      indexed: false
+      description: 'TODO: <gqa:iterative_stddev_xy>'
+    gqa_abs_iterative_mean_x:
+      type: double
+      offset:
+      - properties
+      - gqa:abs_iterative_mean_x
+      indexed: false
+      description: 'TODO: <gqa:abs_iterative_mean_x>'
+    gqa_abs_iterative_mean_y:
+      type: double
+      offset:
+      - properties
+      - gqa:abs_iterative_mean_y
+      indexed: false
+      description: 'TODO: <gqa:abs_iterative_mean_y>'
+    gqa_abs_iterative_mean_xy:
+      type: double
+      offset:
+      - properties
+      - gqa:abs_iterative_mean_xy
+      indexed: false
+      description: 'TODO: <gqa:abs_iterative_mean_xy>'
+...
