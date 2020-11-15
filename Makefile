@@ -58,6 +58,10 @@ index-linescan:
 	docker-compose exec jupyter \
 		bash -c "datacube dataset add /scripts/test_input/*.odc-dataset.json"
 
+index-azure:
+	docker-compose exec jupyter \
+		bash -c "cd /scripts/data && ./add_azure_data.sh"
+
 # Find Sentinel-2, Landsat 7 and Landsat 8 scenes over Victoria
 # First search for all scenes... careful, this takes a very long time.
 find-s-2-documents:
