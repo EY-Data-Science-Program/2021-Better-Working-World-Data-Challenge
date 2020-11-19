@@ -11,39 +11,45 @@ EOS
 exit 1
 fi
 
+# Capture a password
 PASSWORD="${1}"
+
+# Do it different if it's local Docker
+LOCAL="${2}"
 
 set -ex
 # Log start time
 echo "Started $(date)"
 
 # Install our dependencies
-export DEBIAN_FRONTEND=noninteractive
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg > docker.gpg
-apt-get update
-apt-key add docker.gpg 
-apt-key list
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-apt-get update && apt-get install -y docker-ce python3-pip unzip wget
-pip3 install docker-compose
+if ! [[ $LOCAL = "true" ]]; then
+  export DEBIAN_FRONTEND=noninteractive
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg > docker.gpg
+  apt-get update
+  apt-key add docker.gpg 
+  apt-key list
+  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  apt-get update && apt-get install -y docker-ce python3-pip unzip wget
+  pip3 install docker-compose
 
-# Get our code
-wget https://github.com/EY-Data-Science-Program/2020-bushfire-challenge/archive/main.zip -O /tmp/archive.zip
-unzip /tmp/archive.zip
-mv 2020-bushfire-challenge-main /opt/odc
+  # Get our code
+  wget https://github.com/EY-Data-Science-Program/2020-bushfire-challenge/archive/main.zip -O /tmp/archive.zip
+  unzip /tmp/archive.zip
+  mv 2020-bushfire-challenge-main /opt/odc
 
-# We need to change some local vars.
-sed --in-place "s/secretpassword/${PASSWORD}/g" /opt/odc/docker-compose.yml
+  # We need to change some local vars.
+  sed --in-place "s/secretpassword/${PASSWORD}/g" /opt/odc/docker-compose.yml
 
-# We need write access in these places
-chmod -R 777 /opt/odc/notebooks
-cd /opt/odc
+  # We need write access in these places
+  chmod -R 777 /opt/odc/notebooks
+  cd /opt/odc
 
-# Start the machines
-docker-compose up -d
+  # Start the machines
+  docker-compose up -d
 
-# Wait for them to wake up
-sleep 5
+  # Wait for them to wake up
+  sleep 5
+fi
 
 # Initialise and load a product, and then some data
 # Note to future self, we can't use make here because of TTY interactivity (the -T flag)
