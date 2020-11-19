@@ -1,0 +1,15 @@
+
+name: linescan
+description: Auto-generated product example for linescan
+metadata_type: eo3
+
+metadata:
+  product:
+    name: linescan
+
+measurements:
+- name: 'linescan'
+  units: '1'
+  dtype: 'uint8'
+  nodata: 0.0
+...
