@@ -23,6 +23,7 @@ services:
     ports:
       - "80:8888"
     volumes:
+      - ./install-cube.sh:/usr/local/bin/install-cube.sh
       - ./scripts:/scripts
       - ./notebooks:/home/jovyan
     depends_on:
