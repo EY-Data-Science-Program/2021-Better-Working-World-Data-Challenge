@@ -65,7 +65,31 @@
     "subnetName": "dea-subnet",
     "networkSecurityGroupName": "dea-sg"
   },
+
+  
   "resources": [
+    {
+        "apiVersion": "[providers('Microsoft.DevTestLab','labs').apiVersions[0]]",
+        "type": "microsoft.devtestlab/schedules",
+        "name": "[concat('shutdown-computevm-',variables('vmName'))]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/',concat(variables('vmName')))]"
+        ],
+        "properties": {
+            "status": "Enabled",
+            "taskType": "ComputeVmShutdownTask",
+            "dailyRecurrence": {
+                "time": "2300"
+            },
+            "timeZoneId": "AUS Eastern Standard Time",
+            "notificationSettings": {
+                "status": "Disabled",
+                "timeInMinutes": 15
+            },
+            "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines',concat(variables('vmName')))]"
+        }
+    },
     {
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2019-06-01",
