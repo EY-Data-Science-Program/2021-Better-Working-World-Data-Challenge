@@ -1,23 +1,22 @@
 # You can follow the steps below in order to get yourself a local ODC.
-# Once running, you can access a Jupyter environment 
-# at 'http://localhost' with password 'secretpassword'
 
 # 1. Start your Docker environment
 up:
 	docker-compose up
 
+# 2. Prepare your database and set up the ODC
+prepare:
+	./install-cube.sh secretpassword true
+
+
+
+
+
+
+## BELOW IS NOT REQUIRED!!!
 # Delete everything
 down:
 	docker-compose down
-
-# 2. Prepare the database
-initdb:
-	docker-compose exec jupyter \
-		datacube -v system init
-
-# 3.a Add a metadata definition for Sentinel-2
-prepare:
-	./install-cube.sh secretpassword true
 
 # Find Sentinel-2, Landsat 7 and Landsat 8 scenes over Victoria
 # First search for all scenes... careful, this takes a very long time.
