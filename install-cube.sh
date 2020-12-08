@@ -48,7 +48,7 @@ if ! [[ $LOCAL = "true" ]]; then
   docker-compose up -d
 
   # Wait for them to wake up
-  sleep 5
+  sleep 10
 fi
 
 # Initialise and load a product, and then some data
