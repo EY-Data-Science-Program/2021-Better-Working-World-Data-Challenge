@@ -48,7 +48,6 @@
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
     "storageAccountName": "[concat('storage', uniqueString(resourceGroup().id))]",
-    "storageAccountType": "Standard_LRS",
     "storageAccountKind": "Storage",
     "vmSize": {
       "CPU-4GB": "Standard_B2s",
@@ -60,7 +59,6 @@
     },
     "diskSizeGB": "32",
     "vmName": "[concat(parameters('InstanceName'),'-', parameters('InstanceType'))]",
-    "artifactsLocation": "https://raw.githubusercontent.com/codeindulgence/cube-in-a-box-dea/main/",
     "virtualNetworkName": "dea-vnet",
     "subnetName": "dea-subnet",
     "networkSecurityGroupName": "dea-sg"
