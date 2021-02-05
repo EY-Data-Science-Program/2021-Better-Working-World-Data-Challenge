@@ -33,7 +33,7 @@ if ! [[ $LOCAL = "true" ]]; then
   pip3 install docker-compose
 
   # Get our code
-  wget https://codeload.github.com/EY-Data-Science-Program/2020-bushfire-challenge/zip/main?token=AAZONZT3XJYMGUCMU7S5BZLADTMEI -O /tmp/archive.zip
+  wget https://codeload.github.com/EY-Data-Science-Program/2020-bushfire-challenge/zip/main?token=AAZONZRTZIVVCICMVQY3LITADTNWK -O /tmp/archive.zip
   unzip /tmp/archive.zip
   mv 2020-bushfire-challenge-main /opt/odc
 
