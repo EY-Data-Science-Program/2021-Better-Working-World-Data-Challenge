@@ -287,7 +287,7 @@
             "autoUpgradeMinorVersion": true,
             "protectedSettings": {
               "fileUris": [
-                "https://raw.githubusercontent.com/EY-Data-Science-Program/2020-bushfire-challenge/main/install-cube.sh?token=AAZONZQYEIYE2KSSRC7F6V3AIVNHI"
+                "https://raw.githubusercontent.com/EY-Data-Science-Program/2020-bushfire-challenge/main/install-cube.sh?token=AAZONZSGU7OKBNGGF6VBCITAI2PZ2"
               ],
               "commandToExecute": "[concat('bash install-cube.sh ', parameters('SecretPassword'), ' 2>&1 | tee -a /tmp/install-cube.log')]"
             }
