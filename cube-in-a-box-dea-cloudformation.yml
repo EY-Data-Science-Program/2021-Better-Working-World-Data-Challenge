@@ -63,7 +63,7 @@ Resources:
           # Quickly bootstrap our environment and run the common bash script.
           export DEBIAN_FRONTEND=noninteractive
           apt-get update && apt-get install wget
-          wget https://raw.githubusercontent.com/EY-Data-Science-Program/2020-bushfire-challenge/main/install-cube.sh -O /tmp/install-cube.sh
+          wget https://raw.githubusercontent.com/EY-Data-Science-Program/2021-Better-Working-World-Data-Challenge/main/install-cube.sh -O /tmp/install-cube.sh
           chmod +x /tmp/install-cube.sh && bash /tmp/install-cube.sh ${SecretPassword} 2>&1 | tee -a /tmp/install-cube.log
       Tags:
         - Key:   "Name"
