@@ -34,9 +34,8 @@ if ! [[ $LOCAL = "true" ]]; then
   pip3 install docker-compose
 
   # Get our code
-  token=5cf11bdcb64c2c58ae9c7ee85b229ca91b668751
   url=https://codeload.github.com/EY-Data-Science-Program/2020-bushfire-challenge/zip/main
-  wget --header "Authorization: token $token" $url -O /tmp/archive.zip 
+  wget $url -O /tmp/archive.zip 
   unzip /tmp/archive.zip
   mv 2020-bushfire-challenge-main /opt/odc
 
