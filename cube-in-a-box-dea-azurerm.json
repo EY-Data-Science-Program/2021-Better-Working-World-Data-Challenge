@@ -289,7 +289,7 @@
               "fileUris": [
                 "https://raw.githubusercontent.com/EY-Data-Science-Program/2021-Better-Working-World-Data-Challenge/main/install-cube.sh?token=AAZONZT3WFJWD5GRJZ2EAILAKGORA"
               ],
-              "commandToExecute": "[concat('bash install-cube.sh ', parameters('SecretPassword'), ' 2>&1 | tee -a /tmp/install-cube.log')]"
+              "commandToExecute": "[concat('bash install-cube.sh ', parameters('SecretPassword'), ' 2>&1 | tee -a /var/log/install-cube.log')]"
             }
           }
         }
