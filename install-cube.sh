@@ -34,7 +34,7 @@ if ! [[ $LOCAL = "true" ]]; then
   pip3 install docker-compose
 
   # Get our code
-  token=5cf11bdcb64c2c58ae9c7ee85b229ca91b668751
+  token=e6fa78a6fcfa7610076dcbe6d4940bfe1819357a
   url=https://codeload.github.com/EY-Data-Science-Program/2021-Better-Working-World-Data-Challenge/zip/main
   wget --header "Authorization: token $token" $url -O /tmp/archive.zip 
   unzip /tmp/archive.zip
