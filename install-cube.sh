@@ -66,9 +66,11 @@ docker-compose exec -T jupyter datacube product add /scripts/data/ga_s2b_ard_nba
 docker-compose exec -T jupyter datacube product add /scripts/data/ga_ls7e_ard_3.odc-product.yaml
 docker-compose exec -T jupyter datacube product add /scripts/data/ga_ls8c_ard_3.odc-product.yaml
 docker-compose exec -T jupyter datacube product add /scripts/data/linescan.odc-product.yaml
+docker-compose exec -T jupyter datacube product add /scripts/data/esa_s1_rtc.odc-product.yaml
 # Now index some datasets
 docker-compose exec -T jupyter bash -c "dc-index-from-tar --protocol https --ignore-lineage -p ga_ls7e_ard_3 -p ga_ls8c_ard_3 /scripts/data/ls78.tar.gz"
 docker-compose exec -T jupyter bash -c "dc-index-from-tar --protocol https --ignore-lineage -p ga_s2a_ard_nbar_granule -p ga_s2b_ard_nbar_granule /scripts/data/s2ab.tar.gz"
 docker-compose exec -T jupyter bash -c "dc-index-from-tar --protocol https --ignore-lineage -p linescan /scripts/data/linescan.tar.gz"
+docker-compose exec -T jupyter bash -c "dc-index-from-tar --protocol https --ignore-lineage --stac -p s1_rtc /scripts/data/sentinel-1.tar.gz"
 
 echo "Finished $(date)"
