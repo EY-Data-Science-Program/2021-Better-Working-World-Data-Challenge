@@ -9,14 +9,6 @@
         "description": "The name of the Cube in a Box instance."
       }
     },
-    "MyIP": {
-      "type": "string",
-      "MinLength": 9,
-      "MaxLength": 18,
-      "metadata": {
-        "description": "Your IP address that can be used to access the Cube in a Box."
-      }
-    },
     "InstanceType": {
       "type": "string",
       "defaultValue": "CPU-16GB",
@@ -64,68 +56,6 @@
     "networkSecurityGroupName": "dea-sg"
   },
   "resources": [
-    {
-      "type": "Microsoft.Network/networkSecurityGroups",
-      "apiVersion": "2019-06-01",
-      "name": "[variables('networkSecurityGroupName')]",
-      "location": "[variables('Region')]",
-      "properties": {
-        "securityRules": [
-          {
-            "name": "HTTP",
-            "properties": {
-              "priority": 300,
-              "protocol": "Tcp",
-              "access": "Allow",
-              "direction": "Inbound",
-              "sourceAddressPrefix": "[parameters('MyIP')]",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*",
-              "destinationPortRange": "80"
-            }
-          },
-          {
-            "name": "HTTPS",
-            "properties": {
-              "priority": 310,
-              "protocol": "Tcp",
-              "access": "Allow",
-              "direction": "Inbound",
-              "sourceAddressPrefix": "[parameters('MyIP')]",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*",
-              "destinationPortRange": "443"
-            }
-          },
-          {
-            "name": "SSH",
-            "properties": {
-              "priority": 340,
-              "protocol": "Tcp",
-              "access": "Allow",
-              "direction": "Inbound",
-              "sourceAddressPrefix": "[parameters('MyIP')]",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*",
-              "destinationPortRange": "22"
-            }
-          },
-          {
-            "name": "AzureNotebooks",
-            "properties": {
-              "priority": 360,
-              "protocol": "Tcp",
-              "access": "Allow",
-              "direction": "Inbound",
-              "sourceAddressPrefix": "[parameters('MyIP')]",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*",
-              "destinationPortRange": "8000"
-            }
-          }
-        ]
-      }
-    },
     {
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2019-06-01",
