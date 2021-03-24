@@ -20,7 +20,7 @@
         "description": "Instance size"
       }
     },
-    "SshKey": {
+    "SshPublicKey": {
       "type": "string",
       "metadata": {
         "description": "SSH Public Key for the Virtual Machine."
@@ -94,7 +94,6 @@
       "name": "[variables('networkInterfaceName')]",
       "location": "[variables('Region')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
         "[resourceId('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]"
       ],
@@ -180,7 +179,7 @@
               "publicKeys": [
                 {
                   "path": "/home/ubuntu/.ssh/authorized_keys",
-                  "keyData": "[parameters('sshKey')]"
+                  "keyData": "[parameters('sshPublicKey')]"
                 }
               ]
             }
