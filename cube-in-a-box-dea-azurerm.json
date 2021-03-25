@@ -27,7 +27,7 @@
       }
     },
     "SecretPassword": {
-      "type": "string",
+      "type": "secureString",
       "metadata": {
         "description": "Password to access Jupyter notebook."
       }
