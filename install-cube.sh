@@ -20,22 +20,31 @@ LOCAL="${2}"
 set -ex
 # Log start time
 echo "Started $(date)"
+readlink -f $0
+
+function try() {
+  for i in $(seq 10); do
+    $* && break
+    sleep 10
+  done
+}
 
 # Install our dependencies
 if ! [[ $LOCAL = "true" ]]; then
   export DEBIAN_FRONTEND=noninteractive
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg > docker.gpg
-  apt-get update
+  try 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg' > docker.gpg
+  try apt-get update
   apt-key add docker.gpg 
   apt-key list
   add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  apt-get update && apt-get install -y docker-ce python3-pip unzip wget
-  pip3 install --upgrade pip
-  pip3 install docker-compose
+  try apt-get update 
+  try apt-get install -y docker-ce python3-pip unzip wget
+  try pip3 install --upgrade pip
+  try pip3 install docker-compose
 
   # Get our code
   url=https://codeload.github.com/EY-Data-Science-Program/2021-Better-Working-World-Data-Challenge/zip/main
-  wget $url -O /tmp/archive.zip 
+  try wget $url -O /tmp/archive.zip 
   unzip /tmp/archive.zip
   mv 2021-Better-Working-World-Data-Challenge-main /opt/odc
 
