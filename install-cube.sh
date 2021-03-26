@@ -59,13 +59,13 @@ if ! [[ $LOCAL = "true" ]]; then
   docker-compose up -d
 
   # Wait for them to wake up
-  sleep 10
+  sleep 20
 fi
 
 # Initialise and load a product, and then some data
 # Note to future self, we can't use make here because of TTY interactivity (the -T flag)
 # Initialise the datacube DB
-docker-compose exec -T jupyter datacube -v system init
+try docker-compose exec -T jupyter datacube -v system init
 # Add some custom metadata
 docker-compose exec -T jupyter datacube metadata add /scripts/data/metadata.eo_plus.yaml
 docker-compose exec -T jupyter datacube metadata add /scripts/data/eo3_landsat_ard.odc-type.yaml
